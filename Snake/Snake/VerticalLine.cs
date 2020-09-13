@@ -4,18 +4,17 @@ using System.Text;
 
 namespace Snake
 {
-    class HorizontalLine : Figure
+    class VerticalLine : Figure
     {
-        public HorizontalLine(int xLeft, int xRight, int y, char symb)
+        public VerticalLine(int yUp, int yDown, int x, char symb)
         {
             plst = new List<Point>();
 
-            for(int x = xLeft; x <= xRight; x++)
+            for (int y = yUp; y <= yDown; y++)
             {
                 Point p = new Point(x, y, symb);
                 plst.Add(p);
             }
-
         }
 
     }
