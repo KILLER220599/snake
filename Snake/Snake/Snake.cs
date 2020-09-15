@@ -7,7 +7,7 @@ namespace Snake
 {
     class Snake : Figure
     {
-        public Direction direction;
+        Direction direction; // Если перед переменной не указан модификатор доступа, тогда у него будет модификатор доступа private по стандарту.
         public Snake(Point tail, int length, Direction _direction)
         {
             direction = _direction;
@@ -61,6 +61,25 @@ namespace Snake
             else if (key == ConsoleKey.DownArrow)
             {
                 direction = Direction.DOWN;
+            }
+        }
+
+        internal bool Eat(Point food)
+        {
+            Point head = GetNextPoint();
+
+            if (head.IsHit(food))  // Если координаты еды и головы равны, то превращаем еду в символ змеи(часть тело) и добавляем в список точек змеи.
+            // if head.x == food.x && head.y == food.y
+            {
+                food.symb = head.symb;
+                food.DrawPoint();
+                plst.Add(food);
+                return true;
+            }
+
+            else
+            {
+                return false;
             }
         }
     }
