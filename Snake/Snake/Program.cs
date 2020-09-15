@@ -31,11 +31,20 @@ namespace Snake
             rightline.DrawLine();
 
 
-            for (int i = 0; i <= 20; i++)
+            while (true)
             {
+                if(Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo key = Console.ReadKey();
+                    snake.HandleKey(key.Key);
+                    
+                }
+
+                Thread.Sleep(150);
                 snake.Move();
-                Thread.Sleep(300);
-            }
+            }   
+
+
 
 
             Console.ReadLine();
