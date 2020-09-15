@@ -46,16 +46,22 @@ namespace Snake
                 y = y + offset;
             }
 
-            else
+            else if (direction == Direction.UP)
             {
                 y = y - offset;
             }
         }
 
-        public void Draw()
+        public void DrawPoint()
         {
             Console.SetCursorPosition(x, y);
             Console.Write(symb);
+        }
+
+        public void Clear()
+        {
+            symb = ' ';
+            DrawPoint();
         }
     }
 }

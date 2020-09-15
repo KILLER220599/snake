@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection.Metadata.Ecma335;
+using System.Threading;
 
 namespace Snake
 {
@@ -7,30 +8,39 @@ namespace Snake
     {
         static void Main(string[] args)
         {
-            Console.SetWindowSize(80, 25);
-            Console.SetBufferSize(80, 25);
+            Console.SetWindowSize(80, 25); // Настроили размер окна
+            Console.SetBufferSize(80, 25); // Настроили размер командной строки
+            Console.CursorVisible = false; // Сделали курсор невидимым в командной строке
 
-            HorizontalLine upline = new HorizontalLine(0, 78, 0, '+');
-            HorizontalLine downline = new HorizontalLine(0, 78, 24, '+');
-            
-            VerticalLine leftline = new VerticalLine(0, 24, 0, '+');
-            VerticalLine rightline = new VerticalLine(0, 24, 78, '+');
-  
-
-            upline.Draw();
-            downline.Draw();
-            leftline.Draw();
-            rightline.Draw();
 
             Point p = new Point(4, 5, '*');
             Snake snake = new Snake(p, 4, Direction.RIGHT);
-            snake.Draw();
+            snake.DrawLine();
+
+
+            HorizontalLine upline = new HorizontalLine(0, 78, 0, '+');
+            HorizontalLine downline = new HorizontalLine(0, 78, 24, '+');
+
+            VerticalLine leftline = new VerticalLine(0, 24, 0, '+');
+            VerticalLine rightline = new VerticalLine(0, 24, 78, '+');
+
+
+            upline.DrawLine();
+            downline.DrawLine();
+            leftline.DrawLine();
+            rightline.DrawLine();
+
+
+            for (int i = 0; i <= 20; i++)
+            {
+                snake.Move();
+                Thread.Sleep(300);
+            }
 
 
             Console.ReadLine();
         }
 
-        
+
     }
 }
-    
