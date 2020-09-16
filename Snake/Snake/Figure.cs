@@ -8,7 +8,7 @@ namespace Snake
     {
         protected List<Point> plst;
 
-        public void DrawLine()
+        public virtual void DrawLine()
         {
             foreach (Point p in plst)
             {

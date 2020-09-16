@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 
 namespace Snake
@@ -12,54 +14,35 @@ namespace Snake
             Console.SetBufferSize(80, 25); // Настроили размер командной строки
             Console.CursorVisible = false; // Сделали курсор невидимым в командной строке
 
-
-            HorizontalLine upline = new HorizontalLine(0, 78, 0, '+');
-            HorizontalLine downline = new HorizontalLine(0, 78, 24, '+');
-
-            VerticalLine leftline = new VerticalLine(0, 24, 0, '+');
-            VerticalLine rightline = new VerticalLine(0, 24, 78, '+');
-
-            upline.DrawLine();
-            downline.DrawLine();
-            leftline.DrawLine();
-            rightline.DrawLine();
-
+            VerticalLine vl = new VerticalLine(0, 10, 5, '%');
+            Draw(vl);
 
             Point p = new Point(4, 5, '*');
-            Snake snake = new Snake(p, 4, Direction.RIGHT);
-            snake.DrawLine();
+            Figure fSnake = new Snake(p, 4, Direction.RIGHT);
+            Draw(fSnake);
+            Snake snake = (Snake) fSnake;
 
-            FoodCreator foodcreator = new FoodCreator(80, 25, '$');
-            Point food = foodcreator.CreateFood();
-            food.DrawPoint();
+            HorizontalLine hl = new HorizontalLine(0, 5, 6, '&');
 
-            while (true)
+            List<Figure> figure = new List<Figure>();
+            figure.Add(fSnake);
+            figure.Add(vl);
+            figure.Add(hl);
+
+            foreach (var f in figure)
             {
-                if (snake.Eat(food))
-                {
-                    food = foodcreator.CreateFood();
-                    food.DrawPoint();
-                }
+                f.DrawLine();
+            }
 
-                else
-                {
-                    snake.Move();
-                }
-
-                Thread.Sleep(150);
-
-                if (Console.KeyAvailable)
-                {
-                    ConsoleKeyInfo key = Console.ReadKey();
-                    snake.HandleKey(key.Key);
-                    
-                }
-
-            }   
 
             Console.ReadLine();
+        }   
+
+        static void Draw(Figure figure)
+        {
+            figure.DrawLine();
         }
 
-
+       
     }
 }
