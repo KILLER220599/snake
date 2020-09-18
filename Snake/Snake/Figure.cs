@@ -15,5 +15,25 @@ namespace Snake
                 p.DrawPoint();
             }
         }
+
+        public bool IsHitF(Figure figure)
+        {
+            foreach (var p in plst)
+            {
+                if (figure.IsHitP(p))
+                    return true;
+            }
+            return false;
+        }
+
+        public bool IsHitP(Point point)
+        {
+            foreach (var p in plst)
+            {
+                if (p.IsHit(point))
+                    return true;
+            }
+            return false;
+        }
     }
 }

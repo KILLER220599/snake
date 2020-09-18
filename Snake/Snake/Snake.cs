@@ -8,7 +8,14 @@ namespace Snake
     class Snake : Figure
     {
         Direction direction; // Если перед переменной не указан модификатор доступа, тогда у него будет модификатор доступа private по стандарту.
-        public Snake(Point tail, int length, Direction _direction)
+        public int count;
+
+        public Snake()
+        {
+
+        }
+
+        public void BuildSnake(Point tail, int length, Direction _direction)
         {
             direction = _direction;
             plst = new List<Point>();
@@ -16,12 +23,12 @@ namespace Snake
             for (int i = 0; i < length; i++)
             {
                 Point p = new Point(tail);
-                p.Move(i, direction);
+                p.MoveP(i, direction);
                 plst.Add(p);
             }
         }
 
-        internal void Move()
+        internal void MoveS()
         {
             Point tail = plst.First();
             plst.Remove(tail);
@@ -36,32 +43,53 @@ namespace Snake
         {
             Point head = plst.Last();
             Point nextPoint = new Point(head);
-            nextPoint.Move(1, direction);
+            nextPoint.MoveP(1, direction);
 
             return nextPoint;
         }
 
+        public bool IsHitTail()
+        {
+            var head = plst.Last();
+            for (int i = 0; i < plst.Count - 2; i++)
+            {
+                if (head.IsHit(plst[i]))
+                    return true;
+            }
+            return false;
+        }
+
         public void HandleKey(ConsoleKey key)
         {
-            if (key == ConsoleKey.LeftArrow)
+            switch(key)
             {
-                direction = Direction.LEFT;
-            }
+                case (ConsoleKey.LeftArrow):
+                    if (direction != Direction.RIGHT)
+                    {
+                        direction = Direction.LEFT;
+                    }   
+                    break;
 
-            else if (key == ConsoleKey.RightArrow)
-            {
-                direction = Direction.RIGHT;
-            }
+                case (ConsoleKey.RightArrow):
+                    if (direction != Direction.LEFT)
+                    {
+                        direction = Direction.RIGHT;
+                    }
+                    break;
 
-            else if (key == ConsoleKey.UpArrow)
-            {
-                direction = Direction.UP;
-            }
+                case (ConsoleKey.UpArrow):
+                    if (direction != Direction.DOWN)
+                        direction = Direction.UP;
 
-            else if (key == ConsoleKey.DownArrow)
-            {
-                direction = Direction.DOWN;
-            }
+                    break;
+
+                case (ConsoleKey.DownArrow):
+                    if (direction != Direction.UP)
+                        direction = Direction.DOWN;
+
+                    break;
+            }       
+
         }
 
         internal bool Eat(Point food)
@@ -74,6 +102,8 @@ namespace Snake
                 food.symb = head.symb;
                 food.DrawPoint();
                 plst.Add(food);
+                count += 1;
+                CountEat();
                 return true;
             }
 
@@ -81,6 +111,18 @@ namespace Snake
             {
                 return false;
             }
+        }
+
+        public void CountEat()
+        {
+            //Walls wall = new Walls();
+            //Console.SetWindowSize(wall.width, wall.height);
+            //Console.SetBufferSize(wall.width, wall.height); // Комментарий, почему не работает такой способ изложены в классе GameOver.
+            // Console.SetCursorPosition(wall.width - 13, 0);
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.SetCursorPosition(65, 0);
+            Console.WriteLine("Your count: " + count);
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

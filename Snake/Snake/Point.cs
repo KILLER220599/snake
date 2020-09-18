@@ -15,11 +15,12 @@ namespace Snake
 
         }
 
-        public Point(int _x, int _y, char _symb)
+        public Point(int x, int y, char symb)
         {
-            x = _x;
-            y = _y;
-            symb = _symb;
+            this.x = x;
+            this.y = y;       // Присваиваиваем глобальной переменной x(this.x) значение локальной переменной x(переменной в параметре конструктора(метода))
+            this.symb = symb; // для того,чтобы использовать это значение внутри класса, а также,
+                              // в данном случае, глобальные переменные можно использовать в других классах, так как стоит модификатор доступа public
         }
 
         public Point(Point p)
@@ -29,8 +30,9 @@ namespace Snake
             symb = p.symb;
         }
 
-        public void Move(int offset, Direction direction)
+        public void MoveP(int offset, Direction direction)
         {
+            
             if (direction == Direction.RIGHT)
             {
                 x = x + offset;

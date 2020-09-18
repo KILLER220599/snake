@@ -8,33 +8,29 @@ namespace Snake
     {
         static void Main(string[] args)
         {
-            Console.SetWindowSize(80, 25); // Настроили размер окна
-            Console.SetBufferSize(80, 25); // Настроили размер командной строки
-            Console.CursorVisible = false; // Сделали курсор невидимым в командной строке
 
-
-            HorizontalLine upline = new HorizontalLine(0, 78, 0, '+');
-            HorizontalLine downline = new HorizontalLine(0, 78, 24, '+');
-
-            VerticalLine leftline = new VerticalLine(0, 24, 0, '+');
-            VerticalLine rightline = new VerticalLine(0, 24, 78, '+');
-
-            upline.DrawLine();
-            downline.DrawLine();
-            leftline.DrawLine();
-            rightline.DrawLine();
-
+            Walls walls = new Walls();
+            walls.BuildWalls(80, 30);
+            walls.DrawWall();
 
             Point p = new Point(4, 5, '*');
-            Snake snake = new Snake(p, 4, Direction.RIGHT);
+            Snake snake = new Snake();
+            snake.BuildSnake(p, 4, Direction.RIGHT);
             snake.DrawLine();
+            snake.CountEat();
 
-            FoodCreator foodcreator = new FoodCreator(80, 25, '$');
+            FoodCreator foodcreator = new FoodCreator(80, 30, '$');
             Point food = foodcreator.CreateFood();
             food.DrawPoint();
 
             while (true)
             {
+                if (walls.IsHitW(snake) || snake.IsHitTail())
+                {
+                    GameOver game = new GameOver();
+                    break;
+                }
+
                 if (snake.Eat(food))
                 {
                     food = foodcreator.CreateFood();
@@ -43,10 +39,10 @@ namespace Snake
 
                 else
                 {
-                    snake.Move();
+                    snake.MoveS();
                 }
 
-                Thread.Sleep(150);
+                Thread.Sleep(100);
 
                 if (Console.KeyAvailable)
                 {
@@ -54,12 +50,8 @@ namespace Snake
                     snake.HandleKey(key.Key);
                     
                 }
-
-            }   
-
+            }  
             Console.ReadLine();
         }
-
-
     }
 }

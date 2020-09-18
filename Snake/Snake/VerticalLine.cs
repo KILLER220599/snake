@@ -16,6 +16,5 @@ namespace Snake
                 plst.Add(p);
             }
         }
-
     }
 }
