@@ -7,8 +7,8 @@ namespace Snake
     class Walls
     {
         List<Figure> wallList; // Объявляем список в этом месте, так как этот список будет глобальным, и он понадобится в других методах
-        public int width;
-        public int height;
+        int width;
+        int height;
 
         public Walls()
         {
@@ -57,6 +57,16 @@ namespace Snake
             {
                 wall.DrawLine();
             }
+        }
+
+        public void GameOver()
+        {
+            Console.SetWindowSize(width, height);
+            Console.SetBufferSize(width, height);
+            Console.SetCursorPosition((width / 2) - 15, height / 2);
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Конец игры. Ждём Вас снова!");
         }
     }
 }
