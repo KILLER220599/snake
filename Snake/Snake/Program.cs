@@ -28,6 +28,7 @@ namespace Snake
                 if (walls.IsHitW(snake) || snake.IsHitTail())
                 {
                     GameOver game = new GameOver();
+                    snake.CountEatEnd();
                     break;
                 }
 

@@ -120,7 +120,15 @@ namespace Snake
             //Console.SetBufferSize(wall.width, wall.height); // Комментарий, почему не работает такой способ изложены в классе GameOver.
             // Console.SetCursorPosition(wall.width - 13, 0);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.SetCursorPosition(65, 0);
+            Console.SetCursorPosition(69, 0);
+            Console.WriteLine("Count: " + count);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void CountEatEnd()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.SetCursorPosition(32, 16);
             Console.WriteLine("Your count: " + count);
             Console.ForegroundColor = ConsoleColor.White;
         }
